@@ -16,9 +16,9 @@ stages {
    stage('Dockerize the app') {
 	 			steps{
 				script{
-	      docker.withRegistry('https://hub.docker.com', 'docker-creds') {
+	      docker.withRegistry('https://hub.docker.com/', 'docker-creds') {
 
-        def customImage = docker.build("haudharimilind07/python-flsk-app:${env.BUILD_ID}")
+        def customImage = docker.build("chaudharimilind07/python-flsk-app:${env.BUILD_ID}")
         /* Push the container to the custom Registry */
         customImage.push()
 				}
