@@ -6,29 +6,20 @@ stages {
         		 sh 'echo "Clonning the repo"'
 		         }
 	}
-  
+
 	stage('Test') {
 	steps {
-		sh 'python3 test_app.py'
-		input(id: "Deploy Gate", message: "Deploy ${params.project_name}?", ok: 'Deploy')
-	}
-	}
-  
-  
-  stage('Build Docker image') {
-	steps {
-    sh 'docker build -t python-fask-app:${BUILD_NUMBER} . '
-	}
-	}
-  
-  stage('Push Docker image') {
-	steps {
-    sh 'docker push -t python-fask-app:${BUILD_NUMBER} . '
+		sh '##python3 test_app.py'
 	}
 	}
 
-  
-  
+    docker.withRegistry('https://hub.docker.com', 'docker-creds') {
+
+        def customImage = docker.build("haudharimilind07/python-flsk-app:${env.BUILD_ID}")
+        /* Push the container to the custom Registry */
+        customImage.push()
+    }
+
 	stage('Deploy')
 	{
 	steps {
@@ -42,7 +33,7 @@ post {
 			echo 'The pipeline completed'
 			junit allowEmptyResults: true, testResults:'**/test_reports/*.xml'
 		}
-		success {				
+		success {
 			echo "Flask Application Up and running!!"
 		}
 		failure {
