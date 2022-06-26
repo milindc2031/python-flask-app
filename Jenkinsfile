@@ -8,7 +8,6 @@ stages {
 	stage('Git clone') {
 		steps {
     	sh 'echo "Cloning the repo"'
-			sh 'git clone https://github.com/milindc2031/python-flask-app.git'
 		  }
  	}
 
