@@ -30,7 +30,7 @@ stages {
 		}
 	}
 
-	stage('Deliver for development') {
+	stage('Deploying on Dev env') {
   	when {
           branch 'development'
           }
@@ -39,7 +39,7 @@ stages {
             		}
   }
 
-	stage('Deploy for production') {
+	stage('Deploying on Production env') {
   	when {
           branch 'production'
           }
