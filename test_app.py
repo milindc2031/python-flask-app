@@ -1,4 +1,6 @@
- def test_home_page(self):
-     response = self.client.get('/home')
-     assert response.status_code == 200
-     html = response.get_data(as_text=True)
+import requests
+
+response = requests.get('http://127.0.0.1:3200/home')
+response.raise_for_status()  # will raise exception when not a 2xx response
+if response.status_code != 204:
+    return response.json()
