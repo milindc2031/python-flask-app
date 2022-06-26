@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-flask-app
+  labels:
+    app: python-flask-app
+spec:
+  selector:
+    matchLabels:
+        app: python-flask-app
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: python-flask-app
+    spec:
+      containers:
+        - name: python-flask-app
+          image: chaudharimilind07/python-flsk-app:latest
+          ports:
+            - containerPort: 3200
+              protocol: TCP
+          imagePullPolicy: Always
